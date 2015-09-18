@@ -2,7 +2,7 @@
 
 [![Build Status](https://circleci.com/gh/thoughtbot/hound-scss/tree/master.svg?style=svg)](https://circleci.com/gh/thoughtbot/hound-scss/tree/master)
 
-SCSS review service for Hound.
+SCSS review service for Hound. Backed by [SCSS-Lint](https://github.com/brigade/scss-lint).
 
 The service consists of a simple job class that uses Redis as a queue to
 coordinate work with Hound.
