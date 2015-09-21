@@ -1,6 +1,7 @@
 require "resque"
 require "scss_lint"
 
+require "ext/scss_lint/config"
 require "jobs/completed_file_review_job"
 require "config_options"
 

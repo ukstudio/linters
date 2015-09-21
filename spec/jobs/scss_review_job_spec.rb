@@ -69,7 +69,7 @@ linters:
           "content" => ".a { display: 'none'; }\n",
           "config" => <<-CONFIG
 exclude:
-  - "**/test.scss"
+  - "test.scss"
           CONFIG
         )
 
@@ -89,20 +89,20 @@ exclude:
         allow(Resque).to receive("enqueue")
 
         ScssReviewJob.perform(
-          "filename" => "test.scss",
+          "filename" => "app/assets/test.scss",
           "commit_sha" => "123abc",
           "pull_request_number" => "123",
           "patch" => "test",
           "content" => ".a { display: 'none'; }\n",
           "config" => <<-CONFIG
 exclude:
-  "**/test.scss"
+  "app/assets/*"
           CONFIG
         )
 
         expect(Resque).to have_received("enqueue").with(
           CompletedFileReviewJob,
-          filename: "test.scss",
+          filename: "app/assets/test.scss",
           commit_sha: "123abc",
           pull_request_number: "123",
           patch: "test",
