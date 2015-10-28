@@ -36,10 +36,10 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.2.0)
     rspec-support (3.2.2)
-    sass (3.4.13)
-    scss-lint (0.34.0)
+    sass (3.4.19)
+    scss_lint (0.42.2)
       rainbow (~> 2.0)
-      sass (~> 3.4.1)
+      sass (~> 3.4.15)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -56,7 +56,7 @@ DEPENDENCIES
   rake
   resque
   rspec
-  scss-lint (= 0.34.0)
+  scss_lint (= 0.42.2)
 
 BUNDLED WITH
-   1.10.5
+   1.10.6

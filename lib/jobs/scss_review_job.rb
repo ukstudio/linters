@@ -1,3 +1,4 @@
+require "tempfile"
 require "resque"
 require "scss_lint"
 
@@ -23,7 +24,10 @@ class ScssReviewJob
 
     unless scss_lint_config.excluded_file?(filename)
       scss_lint_runner = SCSSLint::Runner.new(scss_lint_config)
-      scss_lint_runner.run([attributes["content"]])
+
+      tempfile_from(attributes) do |tempfile|
+        scss_lint_runner.run([tempfile])
+      end
 
       violations = scss_lint_runner.lints.map do |lint|
         { line: lint.location.line, message: lint.description }
@@ -38,5 +42,15 @@ class ScssReviewJob
       patch: attributes.fetch("patch"),
       violations: violations
     )
+  end
+
+  def self.tempfile_from(attributes)
+    filename = File.basename(attributes.fetch("filename"))
+    Tempfile.create(filename) do |file|
+      file.write(attributes.fetch("content"))
+      file.rewind
+
+      yield(file)
+    end
   end
 end

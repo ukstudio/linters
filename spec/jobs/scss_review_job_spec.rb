@@ -8,7 +8,7 @@ describe ScssReviewJob do
         allow(Resque).to receive("enqueue")
 
         ScssReviewJob.perform(
-          "filename" => "test.scss",
+          "filename" => "app/assets/stylsheets/test.scss",
           "commit_sha" => "123abc",
           "pull_request_number" => "123",
           "patch" => "test",
@@ -17,7 +17,7 @@ describe ScssReviewJob do
 
         expect(Resque).to have_received("enqueue").with(
           CompletedFileReviewJob,
-          filename: "test.scss",
+          filename: "app/assets/stylsheets/test.scss",
           commit_sha: "123abc",
           pull_request_number: "123",
           patch: "test",
@@ -33,7 +33,7 @@ describe ScssReviewJob do
         allow(Resque).to receive("enqueue")
 
         ScssReviewJob.perform(
-          "filename" => "test.scss",
+          "filename" => "app/assets/stylsheets/test.scss",
           "commit_sha" => "123abc",
           "pull_request_number" => "123",
           "patch" => "test",
@@ -48,7 +48,7 @@ linters:
 
         expect(Resque).to have_received("enqueue").with(
           CompletedFileReviewJob,
-          filename: "test.scss",
+          filename: "app/assets/stylsheets/test.scss",
           commit_sha: "123abc",
           pull_request_number: "123",
           patch: "test",
@@ -62,20 +62,20 @@ linters:
         allow(Resque).to receive("enqueue")
 
         ScssReviewJob.perform(
-          "filename" => "test.scss",
+          "filename" => "app/assets/stylesheets/test.scss",
           "commit_sha" => "123abc",
           "pull_request_number" => "123",
           "patch" => "test",
           "content" => ".a { display: 'none'; }\n",
           "config" => <<-CONFIG
 exclude:
-  - "test.scss"
+  - "app/assets/stylesheets/test.scss"
           CONFIG
         )
 
         expect(Resque).to have_received("enqueue").with(
           CompletedFileReviewJob,
-          filename: "test.scss",
+          filename: "app/assets/stylesheets/test.scss",
           commit_sha: "123abc",
           pull_request_number: "123",
           patch: "test",
@@ -89,7 +89,7 @@ exclude:
         allow(Resque).to receive("enqueue")
 
         ScssReviewJob.perform(
-          "filename" => "app/assets/test.scss",
+          "filename" => "app/assets/stylsheets/test.scss",
           "commit_sha" => "123abc",
           "pull_request_number" => "123",
           "patch" => "test",
@@ -102,7 +102,7 @@ exclude:
 
         expect(Resque).to have_received("enqueue").with(
           CompletedFileReviewJob,
-          filename: "app/assets/test.scss",
+          filename: "app/assets/stylsheets/test.scss",
           commit_sha: "123abc",
           pull_request_number: "123",
           patch: "test",
