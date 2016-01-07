@@ -5,7 +5,16 @@ class ConfigOptions
   DEFAULT_CONFIG_FILE = "config/default.yml"
 
   def initialize(config)
-    @custom_options = YAML.load(config || "")
+    @valid = true
+    begin
+      @custom_options = YAML.safe_load(config || "", [Regexp])
+    rescue Psych::Exception
+      @valid = false
+    end
+  end
+
+  def valid?
+    valid
   end
 
   def to_hash
@@ -14,7 +23,7 @@ class ConfigOptions
 
   private
 
-  attr_reader :custom_options
+  attr_reader :custom_options, :valid
 
   def merge(base_options, options)
     merged_options = SCSSLint::Config.send(

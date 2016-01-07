@@ -3,6 +3,31 @@ require "jobs/scss_review_job"
 
 describe ScssReviewJob do
   describe ".perform" do
+    context "when the configuration file is invalid" do
+      it "reports the configuration file as such to Hound proper" do
+        allow(Resque).to receive(:enqueue)
+        attributes = {
+          "filename" => "app/assets/stylsheets/test.scss",
+          "commit_sha" => "123abc",
+          "pull_request_number" => "123",
+          "patch" => "test",
+          "content" => ".a { display: 'none'; }\n",
+          "config" => "--- !ruby/object:Foo {}",
+        }
+
+        ScssReviewJob.perform(attributes)
+
+        expect(Resque).to have_received(:enqueue).with(
+          ReportInvalidConfigJob,
+          pull_request_number: "123",
+          commit_sha: "123abc",
+          linter_name: ScssReviewJob::LINTER_NAME,
+        )
+        expect(Resque).not_to have_received(:enqueue).
+          with(CompletedFileReviewJob, anything)
+      end
+    end
+
     context "when double quotes are preferred by default" do
       it "enqueues review job with violations" do
         allow(Resque).to receive("enqueue")
