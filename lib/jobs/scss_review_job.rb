@@ -26,7 +26,12 @@ class ScssReviewJob
       scss_lint_runner = SCSSLint::Runner.new(scss_lint_config)
 
       tempfile_from(attributes) do |tempfile|
-        scss_lint_runner.run([tempfile])
+        scss_lint_runner.run(
+          [
+            file: tempfile,
+            path: attributes.fetch("filename"),
+          ],
+        )
       end
 
       violations = scss_lint_runner.lints.map do |lint|

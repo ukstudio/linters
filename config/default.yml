@@ -21,6 +21,9 @@ linters:
     enabled: true
     convention: zero # or `none`
 
+  ChainedClasses:
+    enabled: false
+
   ColorKeyword:
     enabled: true
 
@@ -29,6 +32,7 @@ linters:
 
   Comment:
     enabled: true
+    style: silent
 
   DebugStatement:
     enabled: true
@@ -123,6 +127,7 @@ linters:
   PropertySpelling:
     enabled: true
     extra_properties: []
+    disabled_properties: []
 
   PropertyUnits:
     enabled: true
@@ -136,6 +141,9 @@ linters:
       'dpi', 'dpcm', 'dppx',                   # Resolution
       '%']                                     # Other
     properties: {}
+
+  PseudoElement:
+    enabled: true
 
   QualifyingElement:
     enabled: true
@@ -178,7 +186,7 @@ linters:
 
   SpaceAroundOperator:
     enabled: true
-    style: one_space # or 'no_space'
+    style: one_space # or 'at_least_one_space', or 'no_space'
 
   SpaceBeforeBrace:
     enabled: true
@@ -223,7 +231,7 @@ linters:
 
   VendorPrefix:
     enabled: true
-    identifier_list: bourbon
+    identifier_list: base
     additional_identifiers: []
     excluded_identifiers: []
 
