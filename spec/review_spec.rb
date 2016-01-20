@@ -61,12 +61,12 @@ describe Review do
           "pull_request_number" => "123",
           "patch" => "test",
           "content" => ".a { display: 'none'; }\n",
-          "config" => <<-CONFIG.strip_heredoc
+          "config" => <<~EOS
             linters:
               StringQuotes:
                 enabled: false
                 style: double_quotes
-          CONFIG
+          EOS
         }
 
         Review.run(attributes)
@@ -91,10 +91,10 @@ describe Review do
           "pull_request_number" => "123",
           "patch" => "test",
           "content" => ".a { display: 'none'; }\n",
-          "config" => <<-CONFIG.strip_heredoc
+          "config" => <<~EOS
             exclude:
               - "app/assets/stylesheets/test.scss"
-          CONFIG
+          EOS
         }
 
         Review.run(attributes)
@@ -119,10 +119,10 @@ describe Review do
           "pull_request_number" => "123",
           "patch" => "test",
           "content" => ".a { display: 'none'; }\n",
-          "config" => <<-CONFIG.strip_heredoc
+          "config" => <<~EOS
             exclude:
               "app/assets/*"
-          CONFIG
+          EOS
         }
 
         Review.run(attributes)

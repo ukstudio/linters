@@ -22,11 +22,11 @@ describe ConfigOptions do
 
   describe "#to_hash" do
     it "returns merged config options as a hash" do
-      config_options = ConfigOptions.new(<<-CONFIG.strip_heredoc)
+      config_options = ConfigOptions.new(<<~EOS)
         linters:
           BangFormat:
             enabled: false
-      CONFIG
+      EOS
 
       options_hash = config_options.to_hash
 
