@@ -4,6 +4,8 @@
 
 SCSS review service for Hound. Backed by [SCSS-Lint](https://github.com/brigade/scss-lint).
 
+For more information on the SCSS configuration options, please refer to the [scss-lint documentation](https://github.com/brigade/scss-lint/blob/master/lib/scss_lint/linter/README.md).
+
 The service consists of a simple job class that uses Redis as a queue to
 coordinate work with Hound.
 
