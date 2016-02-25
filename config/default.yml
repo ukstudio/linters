@@ -7,6 +7,9 @@ plugin_directories: ['.scss-linters']
 # installed)
 plugin_gems: []
 
+# Default severity of all linters.
+severity: warning
+
 linters:
   BangFormat:
     enabled: true
@@ -113,6 +116,10 @@ linters:
   PlaceholderInExtend:
     enabled: false
 
+  PrivateNamingConvention:
+    enabled: false
+    prefix: _
+
   PropertyCount:
     enabled: true
     include_nested: false
@@ -180,6 +187,10 @@ linters:
 
   SpaceAfterPropertyName:
     enabled: true
+
+  SpaceAfterVariableColon:
+    enabled: false
+    style: one_space # or 'no_space', 'at_least_one_space' or 'one_space_or_newline'
 
   SpaceAfterVariableName:
     enabled: true
