@@ -12,7 +12,7 @@ GEM
     rack (1.6.0)
     rack-protection (1.5.3)
       rack
-    rake (10.4.2)
+    rake (10.5.0)
     redis (3.2.1)
     redis-namespace (1.5.1)
       redis (~> 3.0, >= 3.0.4)
@@ -36,7 +36,7 @@ GEM
       rspec-support (~> 3.2.0)
     rspec-support (3.2.2)
     sass (3.4.21)
-    scss_lint (0.47.0)
+    scss_lint (0.47.1)
       rake (>= 0.9, < 11)
       sass (~> 3.4.15)
     sinatra (1.4.5)
@@ -55,7 +55,7 @@ DEPENDENCIES
   rake
   resque
   rspec
-  scss_lint (= 0.47)
+  scss_lint (~> 0.47.0)
 
 BUNDLED WITH
    1.11.2

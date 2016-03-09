@@ -1,5 +1,6 @@
 require "spec_helper"
 require "review"
+require "tempfile"
 
 describe Review do
   describe ".run" do
