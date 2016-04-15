@@ -1,19 +1,57 @@
-require "review"
-require "raven"
+require "resque"
+
+require "config_options"
+require "jobs/completed_file_review_job"
+require "scss_lint"
+require "scss_lint/file"
+require "scss_lint/runner"
 
 class ScssReviewJob
   @queue = :scss_review
 
-  # The following parameters are required for this job to run.
+  # This job receives the following arguments
   # - filename
-  # - commit_sha
-  # - pull_request_number (pass-through)
-  # - patch (pass-through)
   # - content
   # - config
+  # - pull_request_number (pass-through)
+  # - commit_sha (pass-through)
+  # - patch (pass-through)
   def self.perform(attributes)
-    Review.run(attributes)
-  rescue => exception
-    Raven.capture_exception(exception)
+    config = config_for(attributes: attributes)
+    file = file_for(attributes: attributes)
+    violations = violations_for(file: file, config: config)
+
+    completed_file_review(
+      file: file,
+      attributes: attributes,
+      violations: violations,
+    )
+  end
+
+  def self.completed_file_review(file:, attributes:, violations:)
+    Resque.enqueue(
+      CompletedFileReviewJob,
+      filename: file.path,
+      commit_sha: attributes.fetch("commit_sha"),
+      pull_request_number: attributes.fetch("pull_request_number"),
+      patch: attributes.fetch("patch"),
+      violations: violations,
+    )
+  end
+
+  def self.violations_for(file:, config:)
+    scss_lint_runner = ScssLint::Runner.new(config)
+    scss_lint_runner.violations_for(file)
+  end
+
+  def self.file_for(attributes:)
+    ScssLint::File.new(
+      attributes.fetch("filename"),
+      attributes.fetch("content"),
+    )
+  end
+
+  def self.config_for(attributes:)
+    ConfigOptions.new(attributes["config"])
   end
 end

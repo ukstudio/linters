@@ -1,0 +1,2 @@
+module ScssLint
+end
