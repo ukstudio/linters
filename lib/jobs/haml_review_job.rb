@@ -2,12 +2,12 @@ require "resque"
 
 require "config_options"
 require "jobs/completed_file_review_job"
-require "scss_lint"
+require "haml_lint"
 require "source_file"
-require "scss_lint/runner"
+require "haml_lint/runner"
 
-class ScssReviewJob
-  @queue = :scss_review
+class HamlReviewJob
+  @queue = :haml_review
 
   # This job receives the following arguments
   # - filename
@@ -40,8 +40,8 @@ class ScssReviewJob
   end
 
   def self.violations_for(file:, config:)
-    scss_lint_runner = ScssLint::Runner.new(config)
-    scss_lint_runner.violations_for(file)
+    haml_lint_runner = HamlLint::Runner.new(config)
+    haml_lint_runner.violations_for(file)
   end
 
   def self.file_for(attributes:)
@@ -52,6 +52,6 @@ class ScssReviewJob
   end
 
   def self.config_for(attributes:)
-    ConfigOptions.new(attributes["config"], "scss.yml")
+    ConfigOptions.new(attributes["config"], "haml.yml")
   end
 end

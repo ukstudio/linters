@@ -1,3 +1,5 @@
+require "byebug"
+
 $: << File.expand_path(".")
 
 ENV["RACK_ENV"] = "test"

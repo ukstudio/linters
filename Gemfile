@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 ruby "2.3.1"
 
+gem "haml_lint"
 gem "rake"
 gem "resque"
 gem "resque-sentry"

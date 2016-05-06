@@ -4,7 +4,7 @@ require "jobs/scss_review_job"
 describe ScssReviewJob do
   describe ".perform" do
     it "enqueues completed file review job with violations" do
-      config = ConfigOptions.new("")
+      config = ConfigOptions.new("", "scss.yml")
       runner = ScssLint::Runner.new(config)
       allow(Resque).to receive(:enqueue)
       allow(ScssLint::Runner).to receive(:new).and_return(runner)

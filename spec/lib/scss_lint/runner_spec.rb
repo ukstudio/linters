@@ -6,7 +6,7 @@ require "source_file"
 describe ScssLint::Runner do
   describe "#violations_for" do
     it "executes proper command to get violations" do
-      config = ConfigOptions.new("")
+      config = ConfigOptions.new("", "scss.yml")
       file = SourceFile.new("file.scss", "let x = 'Hello'")
       system_call = SystemCall.new
       allow(system_call).to receive(:call).and_return("")
@@ -18,7 +18,7 @@ describe ScssLint::Runner do
     end
 
     it "returns all violations" do
-      config = ConfigOptions.new("")
+      config = ConfigOptions.new("", "scss.yml")
       file = SourceFile.new("foo/bar.scss", file_content)
       runner = ScssLint::Runner.new(config)
 
@@ -29,7 +29,7 @@ describe ScssLint::Runner do
 
     context "when directory is excluded" do
       it "returns no violations" do
-        config = ConfigOptions.new("exclude: foo/*")
+        config = ConfigOptions.new("exclude: foo/*", "scss.yml")
         file = SourceFile.new("foo/bar.scss", file_content)
         runner = ScssLint::Runner.new(config)
 
