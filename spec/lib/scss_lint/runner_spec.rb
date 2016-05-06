@@ -1,14 +1,14 @@
 require "spec_helper"
 require "config_options"
 require "scss_lint/runner"
-require "scss_lint/file"
+require "source_file"
 
 describe ScssLint::Runner do
   describe "#violations_for" do
     it "executes proper command to get violations" do
       config = ConfigOptions.new("")
-      file = ScssLint::File.new("file.scss", "let x = 'Hello'")
-      system_call = ScssLint::SystemCall.new
+      file = SourceFile.new("file.scss", "let x = 'Hello'")
+      system_call = SystemCall.new
       allow(system_call).to receive(:call).and_return("")
       runner = ScssLint::Runner.new(config, system_call: system_call)
 
@@ -19,7 +19,7 @@ describe ScssLint::Runner do
 
     it "returns all violations" do
       config = ConfigOptions.new("")
-      file = ScssLint::File.new("foo/bar.scss", file_content)
+      file = SourceFile.new("foo/bar.scss", file_content)
       runner = ScssLint::Runner.new(config)
 
       violations = runner.violations_for(file)
@@ -30,7 +30,7 @@ describe ScssLint::Runner do
     context "when directory is excluded" do
       it "returns no violations" do
         config = ConfigOptions.new("exclude: foo/*")
-        file = ScssLint::File.new("foo/bar.scss", file_content)
+        file = SourceFile.new("foo/bar.scss", file_content)
         runner = ScssLint::Runner.new(config)
 
         violations = runner.violations_for(file)

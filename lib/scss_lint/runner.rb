@@ -1,10 +1,10 @@
 require "scss_lint/violation"
-require "scss_lint/system_call"
+require "system_call"
 
 module ScssLint
   class Runner
     def initialize(config, system_call: SystemCall.new)
-      @config_file = File.new(".scss-lint.yml", config.to_yaml)
+      @config_file = SourceFile.new(".scss-lint.yml", config.to_yaml)
       @system_call = system_call
     end
 
@@ -24,7 +24,7 @@ module ScssLint
     end
 
     def execute_linter(file)
-      File.in_tmpdir(file, config_file) do |dir|
+      SourceFile.in_tmpdir(file, config_file) do |dir|
         run_linter_on_system(dir)
       end
     end
@@ -33,7 +33,7 @@ module ScssLint
       Dir.chdir(directory) do
         system_call.call("scss-lint")
       end
-    rescue ScssLint::SystemCall::NonZeroExitStatusError => e
+    rescue SystemCall::NonZeroExitStatusError => e
       e.output
     end
 

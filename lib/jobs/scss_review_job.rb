@@ -3,7 +3,7 @@ require "resque"
 require "config_options"
 require "jobs/completed_file_review_job"
 require "scss_lint"
-require "scss_lint/file"
+require "source_file"
 require "scss_lint/runner"
 
 class ScssReviewJob
@@ -45,7 +45,7 @@ class ScssReviewJob
   end
 
   def self.file_for(attributes:)
-    ScssLint::File.new(
+    SourceFile.new(
       attributes.fetch("filename"),
       attributes.fetch("content"),
     )
