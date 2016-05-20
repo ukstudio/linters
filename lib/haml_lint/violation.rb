@@ -1,10 +1,12 @@
 module HamlLint
   class Violation
+    VIOLATION_LEVEL_ERROR = "E".freeze
+
     VIOLATION_REGEX = /\A
       (?<path>.+):
       (?<line_number>\d+)\s+
       \[(?<violation_level>\w)\]\s+
-      (?<rule_name>[\w\s]+):\s+
+      ((?<rule_name>[\w\s]+):\s+)?
       (?<message>.+)
       \n?
     \z/x
@@ -25,7 +27,11 @@ module HamlLint
     end
 
     def line_number
-      parts[:line_number].to_i
+      if account_for_zero_indexing?
+        parts[:line_number].to_i + 1
+      else
+        parts[:line_number].to_i
+      end
     end
 
     def message
@@ -44,7 +50,12 @@ module HamlLint
       {
         line_number: matches[:line_number],
         message: matches[:message],
+        violation_level: matches[:violation_level],
       }
+    end
+
+    def account_for_zero_indexing?
+      parts[:violation_level] == VIOLATION_LEVEL_ERROR
     end
 
     attr_reader :violation

@@ -38,6 +38,24 @@ describe HamlLint::Runner do
         expect(violations.size).to eq(0)
       end
     end
+
+    context "when the HAML is invalid" do
+      it "returns error as violation" do
+        invalid_content = <<~HAML
+          .main
+            %div
+                %span
+        HAML
+        config = ConfigOptions.new("", "haml.yml")
+        file = SourceFile.new("bar.html.haml", invalid_content)
+        runner = HamlLint::Runner.new(config)
+
+        violations = runner.violations_for(file)
+
+        expect(violations.size).to eq(1)
+        expect(violations.first[:line]).to eq 3
+      end
+    end
   end
 
   def file_content
