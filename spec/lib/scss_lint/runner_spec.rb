@@ -38,6 +38,24 @@ describe ScssLint::Runner do
         expect(violations.size).to eq(0)
       end
     end
+
+    context "when the SCSS is invalid" do
+      it "returns error as violation" do
+        invalid_content = <<~SCSS
+          .main {
+            display: "none";
+          {
+        SCSS
+        config = ConfigOptions.new("", "scss.yml")
+        file = SourceFile.new("bar.scss", invalid_content)
+        runner = ScssLint::Runner.new(config)
+
+        violations = runner.violations_for(file)
+
+        expect(violations.size).to eq(1)
+        expect(violations.first[:line]).to eq 3
+      end
+    end
   end
 
   def file_content

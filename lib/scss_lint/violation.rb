@@ -4,7 +4,7 @@ module ScssLint
       (?<path>.+):
       (?<line_number>\d+)\s+
       \[(?<violation_level>\w)\]\s+
-      (?<rule_name>\w+):\s+
+      (?<rule_name>[\w\s]+):\s+
       (?<message>.+)
       \n?
     \z/x
