@@ -1,13 +1,19 @@
-# Hound-SCSS
+# HoundCI Linters
 
-[![Build Status](https://circleci.com/gh/thoughtbot/hound-scss/tree/master.svg?style=svg)](https://circleci.com/gh/thoughtbot/hound-scss/tree/master)
+[![Build Status](https://circleci.com/gh/houndci/linters.svg?style=svg)](https://circleci.com/gh/houndci/linters)
 
-SCSS review service for Hound. Backed by [SCSS-Lint](https://github.com/brigade/scss-lint).
+A HoundCI service that handles the code linting.
 
-For more information on the SCSS configuration options, please refer to the [scss-lint documentation](https://github.com/brigade/scss-lint/blob/master/lib/scss_lint/linter/README.md).
+## Overview
 
-The service consists of a simple job class that uses Redis as a queue to
-coordinate work with Hound.
+This service pulls jobs off of the queue and uses the appropriate linter to
+review a single file for code style violations. Once the code has been reviewed,
+this service puts the results back on the queue for [Hound] to process.
+
+This service uses the following linters:
+
+  * [scss-lint](https://github.com/brigade/scss-lint) for SCSS
+  * [haml-lint](https://github.com/brigade/haml-lint) for HAML
 
 ## Getting Started
 
@@ -15,3 +21,5 @@ After you have cloned this repo, run this setup script to set up your machine
 with the necessary dependencies to run and test this app:
 
     % ./bin/setup
+
+[Hound]: https://github.com/houndci/hound
