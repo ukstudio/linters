@@ -1,11 +1,11 @@
 require "spec_helper"
 require "haml_lint/violation"
 
-describe HamlLint::Violation do
+describe Haml::Violation do
   describe ".parsable?" do
     context "given a valid violation" do
       it "should parse full violation" do
-        parsable = HamlLint::Violation.parsable?(violation_string)
+        parsable = Haml::Violation.parsable?(violation_string)
 
         expect(parsable).to eq(true)
       end
@@ -13,7 +13,7 @@ describe HamlLint::Violation do
 
     context "given a valid error" do
       it "parses the error" do
-        parsable = HamlLint::Violation.parsable?(error_message)
+        parsable = Haml::Violation.parsable?(error_message)
 
         expect(parsable).to eq(true)
       end
@@ -21,7 +21,7 @@ describe HamlLint::Violation do
 
     context "given an invalid violation" do
       it "should not be able to parse" do
-        parsable = HamlLint::Violation.parsable?("Invalid string")
+        parsable = Haml::Violation.parsable?("Invalid string")
 
         expect(parsable).to eq(false)
       end
@@ -31,7 +31,7 @@ describe HamlLint::Violation do
   describe "#line_number" do
     context "when the message is a violation" do
       it "returns line number" do
-        violation = HamlLint::Violation.new(violation_string(line_number: 1))
+        violation = Haml::Violation.new(violation_string(line_number: 1))
 
         expect(violation.line_number).to eq(1)
       end
@@ -39,7 +39,7 @@ describe HamlLint::Violation do
 
     context "when the message is an error" do
       it "returns the reported line number plus one" do
-        violation = HamlLint::Violation.new(error_message(line_number: 4))
+        violation = Haml::Violation.new(error_message(line_number: 4))
 
         expect(violation.line_number).to eq(5)
       end
@@ -47,11 +47,11 @@ describe HamlLint::Violation do
 
     context "when the message is invalid" do
       it "raises with an invalid string" do
-        violation = HamlLint::Violation.new("invalid string")
+        violation = Haml::Violation.new("invalid string")
 
         expect { violation.line_number }.
           to raise_error(
-            HamlLint::ViolationParseError,
+            Haml::ViolationParseError,
             /Violation: "invalid string"/,
           )
       end
@@ -62,7 +62,7 @@ describe HamlLint::Violation do
     context "when the message is a violation" do
       it "returns the message" do
         message = "Trailing Whitespace Violation: It should not have whitespace"
-        violation = HamlLint::Violation.new(violation_string(message: message))
+        violation = Haml::Violation.new(violation_string(message: message))
 
         expect(violation.message).to eq(message)
       end
@@ -71,7 +71,7 @@ describe HamlLint::Violation do
     context "when the message is an error" do
       it "returns the message" do
         message = "You did it wrong"
-        violation = HamlLint::Violation.new(error_message(message: message))
+        violation = Haml::Violation.new(error_message(message: message))
 
         expect(violation.message).to eq(message)
       end
@@ -79,11 +79,11 @@ describe HamlLint::Violation do
 
     context "when the message is invalid" do
       it "raises with an invalid string" do
-        violation = HamlLint::Violation.new("invalid string")
+        violation = Haml::Violation.new("invalid string")
 
         expect { violation.message }.
           to raise_error(
-            HamlLint::ViolationParseError,
+            Haml::ViolationParseError,
             /Violation: "invalid string"/,
           )
       end

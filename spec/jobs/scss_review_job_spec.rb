@@ -5,9 +5,9 @@ describe ScssReviewJob do
   describe ".perform" do
     it "enqueues completed file review job with violations" do
       config = ConfigOptions.new("", "scss.yml")
-      runner = ScssLint::Runner.new(config)
+      runner = Linters::ScssLint.new(config)
       allow(Resque).to receive(:enqueue)
-      allow(ScssLint::Runner).to receive(:new).and_return(runner)
+      allow(Linters::ScssLint).to receive(:new).and_return(runner)
       allow(runner).
         to receive(:execute_linter).and_return(linter_response)
 
@@ -33,9 +33,9 @@ describe ScssReviewJob do
 
     context "runner fails" do
       it "does not enqueue a completed file review job" do
-        runner = instance_double(ScssLint::Runner)
+        runner = instance_double(Linters::ScssLint)
         allow(runner).to receive(:violations_for).and_raise(RuntimeError)
-        allow(ScssLint::Runner).to receive(:new).and_return(runner)
+        allow(Linters::ScssLint).to receive(:new).and_return(runner)
         allow(Resque).to receive(:enqueue)
 
         expect do

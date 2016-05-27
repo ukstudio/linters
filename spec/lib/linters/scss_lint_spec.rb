@@ -1,18 +1,18 @@
 require "spec_helper"
 require "config_options"
-require "scss_lint/runner"
 require "source_file"
+require "linters/scss_lint"
 
-describe ScssLint::Runner do
+describe Linters::ScssLint do
   describe "#violations_for" do
     it "executes proper command to get violations" do
       config = ConfigOptions.new("", "scss.yml")
       file = SourceFile.new("file.scss", "let x = 'Hello'")
       system_call = SystemCall.new
       allow(system_call).to receive(:call).and_return("")
-      runner = ScssLint::Runner.new(config, system_call: system_call)
+      linter = Linters::ScssLint.new(config, system_call: system_call)
 
-      runner.violations_for(file)
+      linter.violations_for(file)
 
       expect(system_call).to have_received(:call).with("scss-lint")
     end
@@ -20,9 +20,9 @@ describe ScssLint::Runner do
     it "returns all violations" do
       config = ConfigOptions.new("", "scss.yml")
       file = SourceFile.new("foo/bar.scss", file_content)
-      runner = ScssLint::Runner.new(config)
+      linter = Linters::ScssLint.new(config)
 
-      violations = runner.violations_for(file)
+      violations = linter.violations_for(file)
 
       expect(violations.size).to eq(2)
     end
@@ -31,9 +31,9 @@ describe ScssLint::Runner do
       it "returns no violations" do
         config = ConfigOptions.new("exclude: foo/*", "scss.yml")
         file = SourceFile.new("foo/bar.scss", file_content)
-        runner = ScssLint::Runner.new(config)
+        linter = Linters::ScssLint.new(config)
 
-        violations = runner.violations_for(file)
+        violations = linter.violations_for(file)
 
         expect(violations.size).to eq(0)
       end
@@ -48,9 +48,9 @@ describe ScssLint::Runner do
         SCSS
         config = ConfigOptions.new("", "scss.yml")
         file = SourceFile.new("bar.scss", invalid_content)
-        runner = ScssLint::Runner.new(config)
+        linter = Linters::ScssLint.new(config)
 
-        violations = runner.violations_for(file)
+        violations = linter.violations_for(file)
 
         expect(violations.size).to eq(1)
         expect(violations.first[:line]).to eq 3

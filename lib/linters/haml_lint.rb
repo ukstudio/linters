@@ -1,8 +1,8 @@
 require "haml_lint/violation"
 require "system_call"
 
-module HamlLint
-  class Runner
+module Linters
+  class HamlLint
     def initialize(config, system_call: SystemCall.new)
       @config_file = SourceFile.new(".haml-lint.yml", config.to_yaml)
       @system_call = system_call
@@ -10,7 +10,7 @@ module HamlLint
 
     def violations_for(file)
       violation_strings(file).map do |violation_string|
-        Violation.new(violation_string).to_hash
+        Haml::Violation.new(violation_string).to_hash
       end
     end
 
@@ -38,7 +38,7 @@ module HamlLint
     end
 
     def message_parsable?(string)
-      HamlLint::Violation.parsable?(string)
+      Haml::Violation.parsable?(string)
     end
   end
 end

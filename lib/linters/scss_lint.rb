@@ -1,8 +1,8 @@
 require "scss_lint/violation"
 require "system_call"
 
-module ScssLint
-  class Runner
+module Linters
+  class ScssLint
     def initialize(config, system_call: SystemCall.new)
       @config_file = SourceFile.new(".scss-lint.yml", config.to_yaml)
       @system_call = system_call
@@ -10,7 +10,7 @@ module ScssLint
 
     def violations_for(file)
       violation_strings(file).map do |violation_string|
-        Violation.new(violation_string).to_hash
+        Scss::Violation.new(violation_string).to_hash
       end
     end
 
@@ -38,7 +38,7 @@ module ScssLint
     end
 
     def message_parsable?(string)
-      ScssLint::Violation.parsable?(string)
+      Scss::Violation.parsable?(string)
     end
   end
 end

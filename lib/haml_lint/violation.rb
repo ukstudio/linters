@@ -1,4 +1,4 @@
-module HamlLint
+module Haml
   class Violation
     VIOLATION_LEVEL_ERROR = "E".freeze
 

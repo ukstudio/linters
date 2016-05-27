@@ -1,11 +1,11 @@
 require "spec_helper"
 require "scss_lint/violation"
 
-describe ScssLint::Violation do
+describe Scss::Violation do
   describe ".parsable?" do
     context "given a valid violation" do
       it "should parse full violation" do
-        parsable = ScssLint::Violation.parsable?(violation_string)
+        parsable = Scss::Violation.parsable?(violation_string)
 
         expect(parsable).to eq(true)
       end
@@ -13,7 +13,7 @@ describe ScssLint::Violation do
 
     context "fiven a valid error" do
       it "parses the error" do
-        parsable = ScssLint::Violation.parsable?(error_message)
+        parsable = Scss::Violation.parsable?(error_message)
 
         expect(parsable).to eq(true)
       end
@@ -21,7 +21,7 @@ describe ScssLint::Violation do
 
     context "given an invalid violation" do
       it "should not be able to parse" do
-        parsable = ScssLint::Violation.parsable?("Invalid string")
+        parsable = Scss::Violation.parsable?("Invalid string")
 
         expect(parsable).to eq(false)
       end
@@ -31,7 +31,7 @@ describe ScssLint::Violation do
   describe "#line_number" do
     context "when the message is a violation" do
       it "returns line number" do
-        violation = ScssLint::Violation.new(violation_string(line_number: 1))
+        violation = Scss::Violation.new(violation_string(line_number: 1))
 
         expect(violation.line_number).to eq(1)
       end
@@ -39,7 +39,7 @@ describe ScssLint::Violation do
 
     context "when the message is an error" do
       it "returns the reported line number" do
-        violation = ScssLint::Violation.new(error_message(line_number: 4))
+        violation = Scss::Violation.new(error_message(line_number: 4))
 
         expect(violation.line_number).to eq(4)
       end
@@ -47,11 +47,11 @@ describe ScssLint::Violation do
 
     context "when the message is invalid" do
       it "raises with an invalid string" do
-        violation = ScssLint::Violation.new("invalid string")
+        violation = Scss::Violation.new("invalid string")
 
         expect { violation.line_number }.
           to raise_error(
-            ScssLint::ViolationParseError,
+            Scss::ViolationParseError,
             /Violation: "invalid string"/,
           )
       end
@@ -62,7 +62,7 @@ describe ScssLint::Violation do
     context "when the message is a violation" do
       it "returns the message" do
         message = "Trailing Whitespace Violation: It should not have whitespace"
-        violation = ScssLint::Violation.new(violation_string(message: message))
+        violation = Scss::Violation.new(violation_string(message: message))
 
         expect(violation.message).to eq(message)
       end
@@ -71,7 +71,7 @@ describe ScssLint::Violation do
     context "when the message is an error" do
       it "returns the message" do
         message = "You did it wrong"
-        violation = ScssLint::Violation.new(error_message(message: message))
+        violation = Scss::Violation.new(error_message(message: message))
 
         expect(violation.message).to eq(message)
       end
@@ -79,11 +79,11 @@ describe ScssLint::Violation do
 
     context "when the message is invalid" do
       it "raises with an invalid string" do
-        violation = ScssLint::Violation.new("invalid string")
+        violation = Scss::Violation.new("invalid string")
 
         expect { violation.message }.
           to raise_error(
-            ScssLint::ViolationParseError,
+            Scss::ViolationParseError,
             /Violation: "invalid string"/,
           )
       end

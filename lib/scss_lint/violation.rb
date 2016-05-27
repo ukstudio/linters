@@ -1,4 +1,4 @@
-module ScssLint
+module Scss
   class Violation
     VIOLATION_REGEX = /\A
       (?<path>.+):
