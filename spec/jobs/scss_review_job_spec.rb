@@ -4,19 +4,14 @@ require "jobs/scss_review_job"
 describe ScssReviewJob do
   describe ".perform" do
     it "enqueues completed file review job with violations" do
-      config = ConfigOptions.new("", "scss.yml")
-      runner = Linters::ScssLint.new(config)
       allow(Resque).to receive(:enqueue)
-      allow(Linters::ScssLint).to receive(:new).and_return(runner)
-      allow(runner).
-        to receive(:execute_linter).and_return(linter_response)
 
       ScssReviewJob.perform(
         "filename" => "test.scss",
         "commit_sha" => "123abc",
         "pull_request_number" => "123",
         "patch" => "test",
-        "content" => "",
+        "content" => "$color: #aaa\n",
       )
 
       expect(Resque).to have_received(:enqueue).with(
@@ -31,11 +26,11 @@ describe ScssReviewJob do
       )
     end
 
-    context "runner fails" do
+    context "linter fails" do
       it "does not enqueue a completed file review job" do
-        runner = instance_double(Linters::ScssLint)
-        allow(runner).to receive(:violations_for).and_raise(RuntimeError)
-        allow(Linters::ScssLint).to receive(:new).and_return(runner)
+        linter = instance_double(Linters::ScssLint::Linter)
+        allow(linter).to receive(:violations).and_raise(RuntimeError)
+        allow(Linters::ScssLint::Linter).to receive(:new).and_return(linter)
         allow(Resque).to receive(:enqueue)
 
         expect do
@@ -52,11 +47,7 @@ describe ScssReviewJob do
     end
 
     def expected_violation_message
-      "Color `#aaaaaa` should be written as `#aaa`"
-    end
-
-    def linter_response
-      "test.scss:1 [W] HexLength: Color `#aaaaaa` should be written as `#aaa`"
+      "Declaration should be terminated by a semicolon"
     end
   end
 end

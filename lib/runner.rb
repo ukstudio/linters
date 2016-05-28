@@ -1,8 +1,12 @@
 require "config_options"
-require "source_file"
+require "linters/source_file"
 require "jobs/completed_file_review_job"
 
 class Runner
+  def self.call(*args)
+    new(*args).call
+  end
+
   # This job receives the following arguments
   # - filename
   # - content
@@ -10,31 +14,31 @@ class Runner
   # - pull_request_number (pass-through)
   # - commit_sha (pass-through)
   # - patch (pass-through)
-  def initialize(attributes:, linter_class:, config_filename:)
+  def initialize(attributes:, linter_class:, default_config_filename:)
     @attributes = attributes
     @linter_class = linter_class
-    @config_filename = config_filename
+    @default_config_filename = default_config_filename
   end
 
   def call
-    violations = linter.violations_for(file)
+    violations = linter.violations(file)
     complete_file_review(violations)
   end
 
   private
 
-  attr_reader :attributes, :linter_class, :config_filename
+  attr_reader :attributes, :linter_class, :default_config_filename
 
   def linter
     linter_class.new(config)
   end
 
   def config
-    ConfigOptions.new(attributes["config"], config_filename)
+    ConfigOptions.new(attributes["config"], default_config_filename)
   end
 
   def file
-    SourceFile.new(
+    Linters::SourceFile.new(
       attributes.fetch("filename"),
       attributes.fetch("content"),
     )
