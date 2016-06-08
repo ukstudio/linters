@@ -10,7 +10,7 @@ class HamlReviewJob
     Runner.call(
       attributes: attributes,
       linter_class: Linters::HamlLint::Linter,
-      config_filename: "haml.yml",
+      default_config_filename: "haml.yml",
     )
   end
 end

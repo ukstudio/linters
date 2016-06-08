@@ -7,7 +7,7 @@ class Runner
     new(*args).call
   end
 
-  # This job receives the following arguments
+  # The attributes are passed from the job and contain the following:
   # - filename
   # - content
   # - config
@@ -48,7 +48,7 @@ class Runner
     Resque.enqueue(
       CompletedFileReviewJob,
       commit_sha: attributes.fetch("commit_sha"),
-      filename: file.path,
+      filename: attributes.fetch("filename"),
       patch: attributes.fetch("patch"),
       pull_request_number: attributes.fetch("pull_request_number"),
       violations: violations,
