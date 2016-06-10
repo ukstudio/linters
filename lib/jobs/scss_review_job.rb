@@ -1,16 +1,14 @@
 require "resque"
-
-require "linters/scss_lint/linter"
-require "runner"
+require "linters/runner"
+require "linters/scss_lint/options"
 
 class ScssReviewJob
   @queue = :scss_review
 
   def self.perform(attributes)
-    Runner.new(
+    Linters::Runner.call(
+      linter_options: Linters::ScssLint::Options.new,
       attributes: attributes,
-      linter_class: Linters::ScssLint::Linter,
-      default_config_filename: "scss.yml",
-    ).call
+    )
   end
 end

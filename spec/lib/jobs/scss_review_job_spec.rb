@@ -12,7 +12,7 @@ RSpec.describe ScssReviewJob do
           {
             line: 1,
             message: "Declaration should be terminated by a semicolon",
-          }
+          },
         ],
       )
     end
@@ -43,7 +43,7 @@ RSpec.describe ScssReviewJob do
           {
             line: 2,
             message: "Invalid CSS after \".main {\": expected \"}\", was \"{\"",
-          }
+          },
         ],
       )
     end

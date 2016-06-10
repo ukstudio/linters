@@ -1,16 +1,14 @@
 require "resque"
-
-require "linters/haml_lint/linter"
-require "runner"
+require "linters/runner"
+require "linters/haml_lint/options"
 
 class HamlReviewJob
   @queue = :haml_review
 
   def self.perform(attributes)
-    Runner.call(
+    Linters::Runner.call(
+      linter_options: Linters::HamlLint::Options.new,
       attributes: attributes,
-      linter_class: Linters::HamlLint::Linter,
-      default_config_filename: "haml.yml",
     )
   end
 end
