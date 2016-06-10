@@ -1,15 +1,52 @@
 require "jobs/haml_review_job"
 
 RSpec.describe HamlReviewJob do
-  it_behaves_like(
-    "a linter",
-    content: "%div\n  #main",
-    filename: "test.haml",
-    violations: [
-      {
-        line: 2,
-        message: "Files should end with a trailing newline",
-      }
-    ],
-  )
+  include LintersHelper
+
+  context "when file contains violations" do
+    it "reports violations" do
+      expect_violations_in_file(
+        content: "%div\n  #main",
+        filename: "foo/test.haml",
+        violations: [
+          {
+            line: 2,
+            message: "Files should end with a trailing newline",
+          }
+        ],
+      )
+    end
+  end
+
+  context "when directory is excluded" do
+    it "reports no violations" do
+      expect_violations_in_file(
+        config: "exclude: foo/*",
+        content: "%div\n  #main",
+        filename: "foo/test.haml",
+        violations: [],
+      )
+    end
+  end
+
+  context "when sytnax is invalid" do
+    it "reports an error as violation" do
+      invalid_content = <<~SCSS
+        .main
+          %div
+              %span
+      SCSS
+
+      expect_violations_in_file(
+        content: invalid_content,
+        filename: "foo/test.haml",
+        violations: [
+          {
+            line: 3,
+            message: "The line was indented 2 levels deeper than the previous line.",
+          }
+        ],
+      )
+    end
+  end
 end

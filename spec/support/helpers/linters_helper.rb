@@ -1,9 +1,10 @@
-RSpec.shared_examples "a linter" do |args|
-  it "enqueues a job with violations" do
+module LintersHelper
+  def expect_violations_in_file(content:, filename:, config: "", violations:)
     attributes = {
-      "filename" => args.fetch(:filename),
-      "content" => args.fetch(:content),
+      "config" => config,
+      "content" => content,
       "commit_sha" => "anything",
+      "filename" => filename,
       "patch" => "",
       "pull_request_number" => "1",
     }
@@ -17,7 +18,7 @@ RSpec.shared_examples "a linter" do |args|
       filename: attributes["filename"],
       patch: attributes["patch"],
       pull_request_number: attributes["pull_request_number"],
-      violations: args.fetch(:violations),
+      violations: violations,
     )
   end
 end
