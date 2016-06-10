@@ -10,12 +10,13 @@ module Linters
     end
 
     # The attributes are passed from the job and contain the following:
-    # - filename
-    # - content
     # - config
-    # - pull_request_number (pass-through)
+    # - content
+    # - filename
     # - commit_sha (pass-through)
+    # - linter_name (pass-through)
     # - patch (pass-through)
+    # - pull_request_number (pass-through)
     def initialize(linter_options:, attributes:)
       @attributes = attributes
       @linter_options = linter_options
@@ -55,6 +56,7 @@ module Linters
         CompletedFileReviewJob,
         commit_sha: attributes.fetch("commit_sha"),
         filename: filename,
+        linter_name: attributes.fetch("linter_name"),
         patch: attributes.fetch("patch"),
         pull_request_number: attributes.fetch("pull_request_number"),
         violations: violations,
