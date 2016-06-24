@@ -13,11 +13,26 @@ RSpec.describe EslintReviewJob do
             line: 2,
             message: "'hello' is defined but never used  no-unused-vars",
           },
-          {
-            line: 3,
-            message: "Unexpected console statement       no-console",
-          },
         ],
+      )
+    end
+  end
+
+  context "when custom configuraton is provided" do
+    it "respects the custom configuration" do
+      config = <<~JSON
+        {
+          "rules": {
+            "no-unused-vars": "off"
+          }
+        }
+      JSON
+
+      expect_violations_in_file(
+        config: config,
+        content: content,
+        filename: "foo/test.haml",
+        violations: [],
       )
     end
   end
@@ -25,12 +40,12 @@ RSpec.describe EslintReviewJob do
   context "when file with .jsx extention contains violations" do
     it "reports violations" do
       expect_violations_in_file(
-        content: "import React from 'react';",
+        content: content,
         filename: "foo/test.jsx",
         violations: [
           {
-            line: 1,
-            message: "Parsing error: 'import' and 'export' may appear only with 'sourceType: module'",
+            line: 2,
+            message: "'hello' is defined but never used  no-unused-vars",
           },
         ],
       )
@@ -41,7 +56,6 @@ RSpec.describe EslintReviewJob do
     <<~JS
       'use strict';
       function hello() { }
-      console.log('world')
     JS
   end
 end
