@@ -31,11 +31,11 @@ RSpec.describe HamlReviewJob do
 
   context "when sytnax is invalid" do
     it "reports an error as violation" do
-      invalid_content = <<~SCSS
+      invalid_content = <<~HAML
         .main
           %div
               %span
-      SCSS
+      HAML
 
       expect_violations_in_file(
         content: invalid_content,

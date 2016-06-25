@@ -6,6 +6,7 @@ gem "haml_lint"
 gem "rake"
 gem "resque"
 gem "resque-sentry"
+gem "rubocop"
 gem "scss_lint", "~> 0.49.0"
 gem "sentry-raven"
 
