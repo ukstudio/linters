@@ -11,6 +11,10 @@ module Linters
       to_hash.to_yaml
     end
 
+    def to_json
+      to_hash.to_json
+    end
+
     private
 
     attr_reader :custom_config, :default_config_path

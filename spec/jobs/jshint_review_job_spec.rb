@@ -1,6 +1,6 @@
-require "jobs/eslint_review_job"
+require "jobs/jshint_review_job"
 
-RSpec.describe EslintReviewJob do
+RSpec.describe JshintReviewJob do
   include LintersHelper
 
   context "when file with .js extention contains violations" do
@@ -10,8 +10,8 @@ RSpec.describe EslintReviewJob do
         filename: "foo/test.js",
         violations: [
           {
-            line: 2,
-            message: "'hello' is defined but never used  no-unused-vars",
+            line: 3,
+            message: "'hello' is defined but never used.",
           },
         ],
       )
@@ -22,9 +22,7 @@ RSpec.describe EslintReviewJob do
     it "respects the custom configuration" do
       config = <<~JSON
         {
-          "rules": {
-            "no-unused-vars": "off"
-          }
+          "unused": false
         }
       JSON
 
@@ -37,25 +35,12 @@ RSpec.describe EslintReviewJob do
     end
   end
 
-  context "when file with .jsx extention contains violations" do
-    it "reports violations" do
-      expect_violations_in_file(
-        content: content,
-        filename: "foo/test.jsx",
-        violations: [
-          {
-            line: 2,
-            message: "'hello' is defined but never used  no-unused-vars",
-          },
-        ],
-      )
-    end
-  end
-
   def content
     <<~JS
-      'use strict';
-      function hello() { }
+      (function () {
+        'use strict';
+        function hello() { }
+      }());
     JS
   end
 end

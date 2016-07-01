@@ -41,13 +41,9 @@ module Linters
     end
 
     def config_file
-      SourceFile.new(linter_options.config_filename, config.to_yaml)
-    end
-
-    def config
-      Config.new(
-        content: attributes.fetch("config"),
-        default_config_path: linter_options.default_config_path,
+      SourceFile.new(
+        linter_options.config_filename,
+        linter_options.config_content(attributes.fetch("config")),
       )
     end
 
