@@ -6,7 +6,7 @@ gem "haml_lint"
 gem "rake"
 gem "resque"
 gem "resque-sentry"
-gem "scss_lint", "~> 0.47.0"
+gem "scss_lint", "~> 0.49.0"
 gem "sentry-raven"
 
 group :test, :development do

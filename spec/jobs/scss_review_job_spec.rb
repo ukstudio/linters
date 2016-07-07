@@ -41,7 +41,7 @@ RSpec.describe ScssReviewJob do
         filename: "foo/test.scss",
         violations: [
           {
-            line: 2,
+            line: 1,
             message: "Invalid CSS after \".main {\": expected \"}\", was \"{\"",
           },
         ],
