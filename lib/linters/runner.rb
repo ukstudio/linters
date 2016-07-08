@@ -1,6 +1,7 @@
 require "linters/config"
 require "linters/source_file"
 require "linters/lint"
+require "linters/tokenizer"
 require "jobs/completed_file_review_job"
 
 module Linters
