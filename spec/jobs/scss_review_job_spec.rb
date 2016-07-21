@@ -5,12 +5,25 @@ RSpec.describe ScssReviewJob do
 
   context "when file contains violations" do
     it "reports violations" do
+      content = <<~SCSS
+        $my-color: #AAA;
+
+        .main {
+          color: $my-color;
+          display: inline-block
+        }
+      SCSS
+
       expect_violations_in_file(
-        content: "$color: #aaa\n",
+        content: content,
         filename: "foo/test.scss",
         violations: [
           {
             line: 1,
+            message: "Color `#AAA` should be written as `#aaa`",
+          },
+          {
+            line: 5,
             message: "Declaration should be terminated by a semicolon",
           },
         ],
@@ -41,7 +54,7 @@ RSpec.describe ScssReviewJob do
         filename: "foo/test.scss",
         violations: [
           {
-            line: 1,
+            line: 2,
             message: "Invalid CSS after \".main {\": expected \"}\", was \"{\"",
           },
         ],

@@ -3,7 +3,8 @@ module Linters
     class Tokenizer
       VIOLATION_REGEX = /\A
         (?<path>.+):
-        (?<line_number>\d+)\s+
+        (?<line_number>\d+):
+        (?<column_number>\d+)\s+
         \[(?<violation_level>\w)\]\s+
         (?<rule_name>[\w\s]+):\s+
         (?<message>.+)
