@@ -3,7 +3,7 @@ require "yaml"
 module Linters
   class Config
     def initialize(content:, default_config_path:)
-      @custom_config = YAML.safe_load(content) || {}
+      @custom_config = YAML.safe_load(content, [Regexp]) || {}
       @default_config_path = default_config_path
     end
 
@@ -24,7 +24,7 @@ module Linters
     end
 
     def default_config
-      YAML.safe_load(default_content)
+      YAML.safe_load(default_content, [Regexp])
     end
 
     def default_content
