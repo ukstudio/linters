@@ -16,6 +16,7 @@ This service uses the following linters:
   * [eslint](http://eslint.org) for JavaScript and JSX
   * [haml-lint](https://github.com/brigade/haml-lint) for HAML
   * [jshint](http://jshint.com) for JavaScript
+  * [remark-lint](https://github.com/wooorm/remark-lint) for Markdown
   * [rubocop](https://github.com/bbatsov/rubocop) for Ruby
   * [sass-lint](https://github.com/sasstools/sass-lint) for SASS
   * [scss-lint](https://github.com/brigade/scss-lint) for SCSS

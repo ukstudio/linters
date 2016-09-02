@@ -1,0 +1,9 @@
+{
+  "note": "this is just a test file to try to get things working",
+  "plugins": {
+    "lint": {
+      "no-shortcut-reference-link": true,
+      "list-item-bullet-indent": true
+    }
+  }
+}
