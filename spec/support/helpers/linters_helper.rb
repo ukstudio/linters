@@ -1,5 +1,5 @@
 module LintersHelper
-  def expect_violations_in_file(content:, filename:, config: "", violations:)
+  def expect_violations_in_file(content:, filename:, config: "{}", violations:)
     attributes = {
       "config" => config,
       "content" => content,

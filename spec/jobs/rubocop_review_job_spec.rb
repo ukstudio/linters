@@ -5,13 +5,20 @@ RSpec.describe RubocopReviewJob do
 
   context "when file contains violations" do
     it "reports violations" do
+      content = <<~EOS
+        # frozen_string_literal: true
+        def foo(bar:, baz:)
+          bar
+        end
+      EOS
+
       expect_violations_in_file(
-        content: "def yo; 42 end\n",
+        content: content,
         filename: "foo/test.rb",
         violations: [
           {
-            line: 1,
-            message: "Avoid single-line method definitions.",
+            line: 2,
+            message: "Unused method argument - baz.",
           },
         ],
       )
