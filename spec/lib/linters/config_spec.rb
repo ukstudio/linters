@@ -2,7 +2,7 @@ require "linters/config"
 
 describe Linters::Config do
   describe "#to_yaml" do
-    it "returns a merged config" do
+    it "returns a deeply merged config" do
       content = <<~EOL
         linters:
           AltText:
@@ -15,7 +15,14 @@ describe Linters::Config do
 
       result = config.to_yaml
 
-      expect(result).to include(content)
+      expect(result).to include <<-EOS
+  AltText:
+    enabled: true
+      EOS
+      expect(result).to include <<-EOS
+  ColorVariable:
+    enabled: true
+      EOS
     end
   end
 end

@@ -25,24 +25,54 @@ RSpec.describe RubocopReviewJob do
     end
   end
 
-  context "when directory is excluded" do
-    it "reports no violations" do
-      config = <<~YAML
-        AllCops:
-          Exclude:
-            - "foo/test.rb"
-      YAML
+  context "when custom configuration is provided" do
+    context "and directory is excluded" do
+      it "reports no violations" do
+        config = <<~YAML
+          AllCops:
+            Exclude:
+              - "foo/*.rb"
+        YAML
 
-      expect_violations_in_file(
-        config: config,
-        content: "def yo;   42 end",
-        filename: "foo/*",
-        violations: [],
-      )
+        expect_violations_in_file(
+          config: config,
+          content: "def yo;   42 end",
+          filename: "foo/test.rb",
+          violations: [],
+        )
+      end
+    end
+
+    context "and new ruby syntax is used" do
+      it "reports relevant violations" do
+        config = <<~YAML
+          AllCops:
+            Exclude:
+              - Rakefile
+        YAML
+        content = <<~EOS
+          # frozen_string_literal: true
+          def foo(bar:, baz:)
+            bar
+          end
+        EOS
+
+        expect_violations_in_file(
+          config: config,
+          content: content,
+          filename: "foo/test.rb",
+          violations: [
+            {
+              line: 2,
+              message: "Unused method argument - baz.",
+            },
+          ],
+        )
+      end
     end
   end
 
-  context "when sytnax is invalid" do
+  context "when syntax is invalid" do
     it "reports an error as violation" do
       expect_violations_in_file(
         content: "def yo 42 end",

@@ -8,19 +8,27 @@ module Linters
     end
 
     def to_yaml
-      to_hash.to_yaml
+      merge.to_yaml
     end
 
     def to_json
-      to_hash.to_json
+      merge.to_json
     end
 
     private
 
     attr_reader :custom_config, :default_config_path
 
-    def to_hash
-      default_config.merge(custom_config)
+    def merge
+      deep_merger = ->(_key, hash1, hash2) do
+        if Hash === hash1 && Hash === hash2
+          hash1.merge(hash2, &deep_merger)
+        else
+          hash2
+        end
+      end
+
+      default_config.merge(custom_config, &deep_merger)
     end
 
     def default_config
