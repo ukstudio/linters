@@ -29,7 +29,7 @@ RSpec.describe HamlReviewJob do
     end
   end
 
-  context "when sytnax is invalid" do
+  context "when syntax is invalid" do
     it "reports an error as violation" do
       invalid_content = <<~HAML
         .main
