@@ -46,6 +46,31 @@ RSpec.describe CoffeelintReviewJob do
     end
   end
 
+  context "when file contains erb" do
+    it "lints it as coffeescript" do
+      content = <<~EOS
+        class myObj
+          foo = () ->
+            <%= @my_variable %>
+      EOS
+
+      expect_violations_in_file(
+        content: content,
+        filename: "foo/test.coffee",
+        violations: [
+          {
+            line: 1,
+            message: "Class name should be UpperCamelCased. class name: myObj.",
+          },
+          {
+            line: 2,
+            message: "Empty parameter list is forbidden.",
+          },
+        ],
+      )
+    end
+  end
+
   def content
     <<~EOS
       class myObj

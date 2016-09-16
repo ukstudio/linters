@@ -4,9 +4,7 @@ module Linters
   module Coffeelint
     class Options
       def command(filename)
-        path = File.join(File.dirname(__FILE__), "../../..")
-        cmd = "/node_modules/coffeelint/bin/coffeelint #{filename}"
-        File.join(path, cmd)
+        "#{replace_erb_tags(filename)} && #{coffeelint(filename)}"
       end
 
       def config_filename
@@ -28,6 +26,16 @@ module Linters
           content: content,
           default_config_path: "config/coffeelint.json",
         )
+      end
+
+      def replace_erb_tags(filename)
+        "sed -i.bak 's/<%.*%>/123/g' #{filename}"
+      end
+
+      def coffeelint(filename)
+        path = File.join(File.dirname(__FILE__), "../../..")
+        cmd = "/node_modules/coffeelint/bin/coffeelint #{filename}"
+        File.join(path, cmd)
       end
     end
   end
