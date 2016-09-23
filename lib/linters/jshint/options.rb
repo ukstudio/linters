@@ -18,13 +18,9 @@ module Linters
       end
 
       def config_content(content)
-        config(content).to_json
-      end
-
-      private
-
-      def config(content)
-        Config.new(content: content, default_config_path: "config/jshintrc")
+        if JSON.parse(content).any?
+          content
+        end
       end
     end
   end

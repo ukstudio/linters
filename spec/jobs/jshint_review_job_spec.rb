@@ -10,8 +10,8 @@ RSpec.describe JshintReviewJob do
         filename: "foo/test.js",
         violations: [
           {
-            line: 3,
-            message: "'hello' is defined but never used.",
+            line: 2,
+            message: "Use '===' to compare with 'null'.",
           },
         ],
       )
@@ -22,7 +22,7 @@ RSpec.describe JshintReviewJob do
     it "respects the custom configuration" do
       config = <<~JSON
         {
-          "unused": false
+          "eqnull": true
         }
       JSON
 
@@ -37,10 +37,9 @@ RSpec.describe JshintReviewJob do
 
   def content
     <<~JS
-      (function () {
-        'use strict';
-        function hello() { }
-      }());
+      function main(a, b) {
+        return a == null;
+      }
     JS
   end
 end
