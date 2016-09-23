@@ -7,7 +7,7 @@ gem "rake"
 gem "resque"
 gem "resque-sentry"
 gem "rubocop"
-gem "scss_lint", "~> 0.49.0"
+gem "scss_lint"
 gem "sentry-raven"
 
 group :test, :development do
