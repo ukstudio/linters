@@ -3,7 +3,7 @@ require "yaml"
 module Linters
   class Config
     def initialize(content:, default_config_path:)
-      @custom_config = YAML.safe_load(content, [Regexp]) || {}
+      @content = content
       @default_config_path = default_config_path
     end
 
@@ -17,7 +17,7 @@ module Linters
 
     private
 
-    attr_reader :custom_config, :default_config_path
+    attr_reader :content, :default_config_path
 
     def merge
       deep_merger = ->(_key, hash1, hash2) do
@@ -29,6 +29,10 @@ module Linters
       end
 
       default_config.merge(custom_config, &deep_merger)
+    end
+
+    def custom_config
+      YAML.safe_load(content, [Regexp]) || {}
     end
 
     def default_config

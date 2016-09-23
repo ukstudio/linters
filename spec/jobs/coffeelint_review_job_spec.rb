@@ -14,8 +14,8 @@ RSpec.describe CoffeelintReviewJob do
             message: "Class name should be UpperCamelCased. class name: myObj.",
           },
           {
-            line: 2,
-            message: "Empty parameter list is forbidden.",
+            line: 3,
+            message: "Line contains a trailing semicolon.",
           },
         ],
       )
@@ -26,7 +26,7 @@ RSpec.describe CoffeelintReviewJob do
     it "respects the custom configuration" do
       config = <<~JSON
         {
-          "no_empty_param_list": {
+          "camel_case_classes": {
             "level": "ignore"
           }
         }
@@ -38,8 +38,8 @@ RSpec.describe CoffeelintReviewJob do
         filename: "foo/test.js",
         violations: [
           {
-            line: 1,
-            message: "Class name should be UpperCamelCased. class name: myObj.",
+            line: 3,
+            message: "Line contains a trailing semicolon.",
           },
         ],
       )
@@ -49,9 +49,9 @@ RSpec.describe CoffeelintReviewJob do
   context "when file contains erb" do
     it "lints it as coffeescript" do
       content = <<~EOS
-        class myObj
-          foo = () ->
-            <%= @my_variable %>
+        class FooBar
+          baz = ->
+            <%= @my_variable %>;
       EOS
 
       expect_violations_in_file(
@@ -59,12 +59,8 @@ RSpec.describe CoffeelintReviewJob do
         filename: "foo/test.coffee",
         violations: [
           {
-            line: 1,
-            message: "Class name should be UpperCamelCased. class name: myObj.",
-          },
-          {
-            line: 2,
-            message: "Empty parameter list is forbidden.",
+            line: 3,
+            message: "Line contains a trailing semicolon.",
           },
         ],
       )
@@ -74,8 +70,8 @@ RSpec.describe CoffeelintReviewJob do
   def content
     <<~EOS
       class myObj
-        foo = () ->
-          'hello world'
+        greet = ->
+          'hello world';
     EOS
   end
 end

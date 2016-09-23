@@ -1,5 +1,6 @@
 require "linters/config"
 require "linters/source_file"
+require "linters/noop_file"
 require "linters/lint"
 require "linters/tokenizer"
 require "jobs/completed_file_review_job"
@@ -42,10 +43,14 @@ module Linters
     end
 
     def config_file
-      SourceFile.new(
-        linter_options.config_filename,
-        linter_options.config_content(attributes.fetch("config")),
-      )
+      if config_content
+        SourceFile.new(
+          linter_options.config_filename,
+          config_content,
+        )
+      else
+        NoopFile.new
+      end
     end
 
     def complete_file_review(violations)
@@ -62,6 +67,10 @@ module Linters
 
     def filename
       attributes.fetch("filename")
+    end
+
+    def config_content
+      linter_options.config_content(attributes.fetch("config"))
     end
   end
 end
