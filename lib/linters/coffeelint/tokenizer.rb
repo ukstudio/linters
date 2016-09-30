@@ -2,8 +2,10 @@ module Linters
   module Coffeelint
     class Tokenizer
       VIOLATION_REGEX = /\A
-        .*#
-        (?<line_number>\d+):\s
+        .*\#
+        (?<line_number>\d+):
+        (?<parse_error_details>.+:\d+:)?
+        \s
         (?<message>.+)
         \n?
       \z/x

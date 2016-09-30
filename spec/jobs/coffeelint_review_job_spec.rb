@@ -46,6 +46,35 @@ RSpec.describe CoffeelintReviewJob do
     end
   end
 
+  context "when file content is long" do
+    it "finds violation on the correct line" do
+      content = <<~EOS
+        class MyClass
+          construtor: ->
+            foo1()
+            foo2()
+            foo3()
+            foo4()
+            foo5()
+            foo6()
+            foo7()
+            foo8()
+              foo9()
+      EOS
+
+      expect_violations_in_file(
+        content: content,
+        filename: "foo/test.js",
+        violations: [
+          {
+            line: 11,
+            message: "error: unexpected indentation",
+          },
+        ],
+      )
+    end
+  end
+
   context "when file contains erb" do
     it "lints it as coffeescript" do
       content = <<~EOS
