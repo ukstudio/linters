@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "coffeelint": "^1.15.7",
-    "eslint": "^3.5.0",
+    "eslint": "^3.7.1",
     "eslint-config-airbnb": "^11.1.0",
     "eslint-config-littlebits": "^0.5.1",
     "eslint-config-semistandard": "^7.0.0",
