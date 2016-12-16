@@ -10,9 +10,9 @@ GEM
       multipart-post (>= 1.2, < 3)
     haml (4.0.7)
       tilt
-    haml_lint (0.18.2)
+    haml_lint (0.19.0)
       haml (~> 4.0)
-      rake (>= 10, < 12)
+      rake (>= 10, < 13)
       rubocop (>= 0.36.0)
       sysexits (~> 1.1)
     mono_logger (1.1.0)
