@@ -18,6 +18,7 @@ This service uses the following linters:
   * [jshint](http://jshint.com) for JavaScript
   * [rubocop](https://github.com/bbatsov/rubocop) for Ruby
   * [scss-lint](https://github.com/brigade/scss-lint) for SCSS
+  * [credo](https://github.com/rrrene/credo) for Elixir
 
 ## Getting Started
 

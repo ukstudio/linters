@@ -1,3 +1,15 @@
 machine:
+  environment:
+    PATH: "$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH"
   node:
     version: 6.6.0
+dependencies:
+  cache_directories:
+    - ~/.asdf
+    - ~/.npm
+    - deps
+    - _build
+  pre:
+    - if ! asdf | grep version; then git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.2.1; fi
+    - cp .tool-versions ~/.tool-versions
+    - bin/setup
