@@ -7,16 +7,6 @@ bundle check || bundle install
 
 npm install
 
-if ! command -v asdf >/dev/null; then
-  echo "It looks like you don't have asdf installed."
-  echo "See https://github.com/asdf-vm/asdf for instructions."
-  exit 1
-fi
-
-asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git || true
-asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git || true
-asdf install
-
 if ! command -v mix >/dev/null; then
   echo "It looks like you don't have Elixir installed."
   echo "See http://elixir-lang.org/install.html for instructions."
