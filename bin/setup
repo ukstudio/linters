@@ -10,7 +10,7 @@ npm install
 if ! command -v mix >/dev/null; then
   echo "It looks like you don't have Elixir installed."
   echo "See http://elixir-lang.org/install.html for instructions."
-  exit 1
+  exit 78
 fi
 
 mix local.hex --force
