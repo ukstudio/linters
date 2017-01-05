@@ -2,8 +2,9 @@ module Linters
   module Credo
     class Tokenizer
       VIOLATION_REGEX = /\A
-        (?<file_name>.+):
-        (?<line_number>\d+):\s+
+        (?<file_name>[^:]+):
+        (?<line_number>\d+):
+        ((?<column_number>\d+):)?\s+
         (?<violation_level>\w+):\s+
         (?<message>.+)
         \n?
