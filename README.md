@@ -19,6 +19,7 @@ This service uses the following linters:
   * [rubocop](https://github.com/bbatsov/rubocop) for Ruby
   * [scss-lint](https://github.com/brigade/scss-lint) for SCSS
   * [credo](https://github.com/rrrene/credo) for Elixir
+  * [reek](https://github.com/troessner/reek) for Ruby code smells
 
 ## Getting Started
 

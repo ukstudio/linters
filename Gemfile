@@ -4,6 +4,7 @@ ruby "2.3.1"
 
 gem "haml_lint"
 gem "rake"
+gem "reek"
 gem "resque"
 gem "resque-sentry"
 gem "rubocop"
