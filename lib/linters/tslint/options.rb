@@ -1,8 +1,9 @@
+require "linters/base/options"
 require "linters/tslint/tokenizer"
 
 module Linters
   module Tslint
-    class Options
+    class Options < Linters::Base::Options
       def command(filename)
         path = File.join(File.dirname(__FILE__), "../../..")
         cmd = "/node_modules/tslint/bin/tslint #{filename}"

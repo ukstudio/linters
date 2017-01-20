@@ -1,8 +1,9 @@
+require "linters/base/options"
 require "linters/jshint/tokenizer"
 
 module Linters
   module Jshint
-    class Options
+    class Options < Linters::Base::Options
       def command(filename)
         path = File.join(File.dirname(__FILE__), "../../..")
         cmd = "/node_modules/jshint/bin/jshint #{filename}"

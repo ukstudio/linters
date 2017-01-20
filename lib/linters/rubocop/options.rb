@@ -1,8 +1,9 @@
+require "linters/base/options"
 require "linters/rubocop/tokenizer"
 
 module Linters
   module Rubocop
-    class Options
+    class Options < Linters::Base::Options
       def command(_filename)
         "rubocop"
       end

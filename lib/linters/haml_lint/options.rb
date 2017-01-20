@@ -1,8 +1,9 @@
+require "linters/base/options"
 require "linters/haml_lint/tokenizer"
 
 module Linters
   module HamlLint
-    class Options
+    class Options < Linters::Base::Options
       def command(filename)
         "haml-lint #{filename}"
       end

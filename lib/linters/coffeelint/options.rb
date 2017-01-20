@@ -1,8 +1,9 @@
+require "linters/base/options"
 require "linters/coffeelint/tokenizer"
 
 module Linters
   module Coffeelint
-    class Options
+    class Options < Linters::Base::Options
       def command(filename)
         "#{replace_erb_tags(filename)} && #{coffeelint(filename)}"
       end

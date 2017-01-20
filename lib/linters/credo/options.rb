@@ -1,8 +1,9 @@
+require "linters/base/options"
 require "linters/credo/tokenizer"
 
 module Linters
   module Credo
-    class Options
+    class Options < Linters::Base::Options
       def command(filename)
         mix("credo #{filename} --strict --all --format=flycheck")
       end

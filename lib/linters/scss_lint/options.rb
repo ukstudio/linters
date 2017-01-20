@@ -1,8 +1,9 @@
+require "linters/base/options"
 require "linters/scss_lint/tokenizer"
 
 module Linters
   module ScssLint
-    class Options
+    class Options < Linters::Base::Options
       def command(filename)
         "scss-lint #{filename}"
       end
