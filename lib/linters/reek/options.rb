@@ -5,7 +5,7 @@ module Linters
   module Reek
     class Options < Linters::Base::Options
       def command(filename)
-        "reek --no-wiki-links --single-line --no-progress #{filename}"
+        "reek --single-line --no-progress #{filename}"
       end
 
       def config_filename
