@@ -21,7 +21,15 @@ module Linters
       def config_content(content)
         if JSON.parse(content).any?
           content
+        else
+          config(content).to_json
         end
+      end
+
+      private
+
+      def config(content)
+        Config.new(content: content, default_config_path: "config/tslint.json")
       end
     end
   end

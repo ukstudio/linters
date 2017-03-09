@@ -15,6 +15,10 @@ RSpec.describe TslintReviewJob do
           },
           {
             line: 1,
+            message: "require statement not part of an import statement",
+          },
+          {
+            line: 1,
             message: "' should be \"",
           },
         ],
