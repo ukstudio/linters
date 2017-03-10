@@ -21,11 +21,7 @@ This service uses the following linters:
   * [credo](https://github.com/rrrene/credo) for Elixir
   * [reek](https://github.com/troessner/reek) for Ruby code smells
 
-## Getting Started
+To contribute to the Linters codebase, see the [CONTRIBUTING.md] file.
 
-After you have cloned this repo, run this setup script to set up your machine
-with the necessary dependencies to run and test this app:
-
-    % ./bin/setup
-
+[CONTRIBUTING.md]: CONTRIBUTING.md
 [Hound]: https://github.com/houndci/hound
