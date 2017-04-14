@@ -11,6 +11,7 @@ require "linters/jshint/options"
 require "linters/reek/options"
 require "linters/rubocop/options"
 require "linters/scss_lint/options"
+require "linters/slim_lint/options"
 require "linters/tslint/options"
 
 class LintersJob
