@@ -4,6 +4,7 @@ require "linters/noop_file"
 require "linters/lint"
 require "linters/tokenizer"
 require "jobs/completed_file_review_job"
+require "jobs/report_invalid_config_job"
 
 module Linters
   class Runner
@@ -30,8 +31,20 @@ module Linters
         config_file: config_file,
         source_file: source_file,
       )
-      violations = linter_options.tokenizer.parse(output)
-      complete_file_review(violations)
+      errors = linter_options.tokenizer.errors(output)
+
+      if errors.empty?
+        violations = linter_options.tokenizer.violations(output)
+        complete_file_review(violations)
+      else
+        Resque.enqueue(
+          ReportInvalidConfigJob,
+          pull_request_number: attributes.fetch("pull_request_number"),
+          commit_sha: attributes.fetch("commit_sha"),
+          linter_name: attributes.fetch("linter_name"),
+          message: errors.first,
+        )
+      end
     end
 
     private

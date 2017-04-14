@@ -16,9 +16,9 @@ module Linters
         not_implemented!(__method__)
       end
 
-      # Object to parse linter output, returning hash with line numbers and
-      # messages of the issues
-      # @return [#parse] a Tokenizer object implementing `#parse`
+      # Object to find violations in linter output, returning hash with line
+      # numbers and messages of the violations
+      # @return [#violations, #errors] a Tokenizer object implementing `#violations` and `#errors`
       def tokenizer
         not_implemented!(__method__)
       end

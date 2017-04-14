@@ -1,6 +1,8 @@
+require "linters/base/tokenizer"
+
 module Linters
   module Flog
-    class Tokenizer
+    class Tokenizer < Base::Tokenizer
       MIN_COMPLEXITY_THRESHOLD = 25
       VIOLATION_REGEX = /\A
         \s*
@@ -11,13 +13,13 @@ module Linters
         \n?
       \z/x
 
-      def parse(text)
-        text.split("\n").map { |line| tokenize(line) }.compact
+      def violations(text)
+        text.split("\n").map { |line| parse_violation(line) }.compact
       end
 
       private
 
-      def tokenize(line)
+      def parse_violation(line)
         matches = VIOLATION_REGEX.match(line)
 
         if matches && (matches[:score] || 0).to_i >= MIN_COMPLEXITY_THRESHOLD

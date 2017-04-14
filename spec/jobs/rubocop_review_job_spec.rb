@@ -26,6 +26,43 @@ RSpec.describe RubocopReviewJob do
   end
 
   context "when custom configuration is provided" do
+    context "and outdated Rubocop rule is used" do
+      it "reports the invalid config" do
+        config = <<~YAML
+          Style/SpaceBeforeModifierKeyword:
+            Enabled: true
+        YAML
+
+        content = <<~EOS
+          # frozen_string_literal: true
+          def foo(bar:, baz:)
+            bar
+          end
+        EOS
+
+        attributes = {
+          "config" => config,
+          "content" => content,
+          "commit_sha" => "anything",
+          "filename" => "foo/test.rb",
+          "patch" => "",
+          "linter_name" => "rubocop",
+          "pull_request_number" => "1",
+        }
+        allow(Resque).to receive(:enqueue)
+
+        RubocopReviewJob.perform(attributes)
+
+        expect(Resque).to have_received(:enqueue).with(
+          ReportInvalidConfigJob,
+          pull_request_number: attributes["pull_request_number"],
+          commit_sha: attributes["commit_sha"],
+          linter_name: attributes["linter_name"],
+          message: "The `Style/SpaceBeforeModifierKeyword` cop has been removed. Please use `Style/SpaceAroundKeyword` instead.",
+        )
+      end
+    end
+
     context "and directory is excluded" do
       it "reports no violations" do
         config = <<~YAML

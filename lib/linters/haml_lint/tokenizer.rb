@@ -1,6 +1,8 @@
+require "linters/base/tokenizer"
+
 module Linters
   module HamlLint
-    class Tokenizer
+    class Tokenizer < Base::Tokenizer
       VIOLATION_LEVEL_ERROR = "E".freeze
 
       VIOLATION_REGEX = /\A
@@ -12,13 +14,13 @@ module Linters
         \n?
       \z/x
 
-      def parse(text)
-        text.split("\n").map { |line| tokenize(line) }.compact
+      def violations(text)
+        text.split("\n").map { |line| parse_violation(line) }.compact
       end
 
       private
 
-      def tokenize(line)
+      def parse_violation(line)
         matches = VIOLATION_REGEX.match(line)
 
         if matches

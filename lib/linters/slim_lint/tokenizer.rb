@@ -1,6 +1,8 @@
+require "linters/base/tokenizer"
+
 module Linters
   module SlimLint
-    class Tokenizer
+    class Tokenizer < Base::Tokenizer
       VIOLATION_REGEX = /\A
         (?<path>.+):
         (?<line_number>\d+)\s+
@@ -10,7 +12,7 @@ module Linters
         \n?
       \z/x
 
-      def parse(text)
+      def violations(text)
         text.split("\n").map { |line| tokenize(line) }.compact
       end
 

@@ -2,7 +2,7 @@ require "linters/tokenizer"
 require "linters/reek/tokenizer"
 
 describe Linters::Reek::Tokenizer do
-  describe "#parse" do
+  describe "#violations" do
     it "parses line numbers when columns provided" do
       explanation_link = "https://github.com/troessner/reek/wiki.md"
 
@@ -18,7 +18,7 @@ describe Linters::Reek::Tokenizer do
       ].join(" ")
 
       tokenizer = Linters::Reek::Tokenizer.new
-      parsed = tokenizer.parse(original_input)
+      parsed = tokenizer.violations(original_input)
 
       expect(parsed).to eq([{ line: 9, message: expected_message }])
     end

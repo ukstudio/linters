@@ -1,6 +1,8 @@
+require "linters/base/tokenizer"
+
 module Linters
   module Rubocop
-    class Tokenizer
+    class Tokenizer < Base::Tokenizer
       VIOLATION_REGEX = /\A
         (?<path>.+):
         (?<line_number>\d+):
@@ -10,13 +12,19 @@ module Linters
         \n?
       \z/x
 
-      def parse(text)
-        text.split("\n").map { |line| tokenize(line) }.compact
+      ERROR_REGEX = /\AError: (?<error>.*)\z/
+
+      def violations(text)
+        text.split("\n").map { |line| parse_violation(line) }.compact
+      end
+
+      def errors(text)
+        text.split("\n").map { |line| parse_error(line) }.compact
       end
 
       private
 
-      def tokenize(line)
+      def parse_violation(line)
         matches = VIOLATION_REGEX.match(line)
 
         if matches
@@ -25,6 +33,14 @@ module Linters
             line: line_number,
             message: matches[:message],
           }
+        end
+      end
+
+      def parse_error(line)
+        matches = ERROR_REGEX.match(line)
+
+        if matches
+          matches[:error]
         end
       end
     end

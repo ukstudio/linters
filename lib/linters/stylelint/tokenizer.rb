@@ -1,7 +1,9 @@
+require "linters/base/tokenizer"
+
 # frozen_string_literal: true
 module Linters
   module Stylelint
-    class Tokenizer
+    class Tokenizer < Base::Tokenizer
       VIOLATION_REGEX = /
         (?<line_number>.+):
         (?<column_number>\d+)\s+
@@ -9,8 +11,8 @@ module Linters
         (?<message>.+\S)
       /x
 
-      def parse(text)
-        Linters::Tokenizer.new(text, VIOLATION_REGEX).parse
+      def violations(text)
+        Linters::Tokenizer.new(text, VIOLATION_REGEX).violations
       end
     end
   end

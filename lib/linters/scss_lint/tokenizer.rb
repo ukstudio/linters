@@ -1,6 +1,8 @@
+require "linters/base/tokenizer"
+
 module Linters
   module ScssLint
-    class Tokenizer
+    class Tokenizer < Base::Tokenizer
       VIOLATION_REGEX = /\A
         (?<path>.+):
         (?<line_number>\d+):
@@ -11,8 +13,8 @@ module Linters
         \n?
       \z/x
 
-      def parse(text)
-        Linters::Tokenizer.new(text, VIOLATION_REGEX).parse
+      def violations(text)
+        Linters::Tokenizer.new(text, VIOLATION_REGEX).violations
       end
     end
   end

@@ -1,6 +1,8 @@
+require "linters/base/tokenizer"
+
 module Linters
   module Jshint
-    class Tokenizer
+    class Tokenizer < Base::Tokenizer
       VIOLATION_REGEX = /\A
         (?<path>.+)\D+
         (?<line_number>\d+)\D+
@@ -9,8 +11,8 @@ module Linters
         \n?
       \z/x
 
-      def parse(text)
-        Linters::Tokenizer.new(text, VIOLATION_REGEX).parse
+      def violations(text)
+        Linters::Tokenizer.new(text, VIOLATION_REGEX).violations
       end
     end
   end

@@ -5,15 +5,15 @@ module Linters
       @regex = regex
     end
 
-    def parse
-      text.split("\n").map { |line| tokenize(line, regex) }.compact
+    def violations
+      text.split("\n").map { |line| parse_violation(line, regex) }.compact
     end
 
     private
 
     attr_reader :text, :regex
 
-    def tokenize(line, regex)
+    def parse_violation(line, regex)
       matches = regex.match(line)
 
       if matches
