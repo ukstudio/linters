@@ -12,11 +12,11 @@ RSpec.describe Flake8ReviewJob do
         violations: [
           {
             line: 1,
-            message: "undefined name 'foo'",
+            message: "'fibo.fib' imported but unused",
           },
           {
-            line: 2,
-            message: "indentation is not a multiple of four",
+            line: 3,
+            message: "undefined name 'foo'",
           },
         ],
       )
@@ -39,8 +39,8 @@ RSpec.describe Flake8ReviewJob do
         filename: "foo/bar.py",
         violations: [
           {
-            line: 2,
-            message: "indentation is not a multiple of four",
+            line: 1,
+            message: "'fibo.fib' imported but unused",
           },
         ],
       )
@@ -49,8 +49,10 @@ RSpec.describe Flake8ReviewJob do
 
   def content
     <<~EOS
+      from fibo import fib
+
       if foo == "":
-        print "foo is invalid"
+          print("foo is invalid")
     EOS
   end
 end
