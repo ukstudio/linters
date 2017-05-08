@@ -1058,6 +1058,10 @@ eslint-plugin-promise@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-2.0.1.tgz#a9759cefa5e38ab11bb2ef65a04ef042309aa0a4"
 
+eslint-plugin-react-native@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-native/-/eslint-plugin-react-native-2.3.2.tgz#e1b2ba2d97fb46b16fe2dbb5bd4d0f47419f2859"
+
 eslint-plugin-react@^5.1.1:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-5.2.2.tgz#7db068e1f5487f6871e4deef36a381c303eac161"
