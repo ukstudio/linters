@@ -17,6 +17,7 @@ This service uses the following linters:
   * [haml-lint](https://github.com/brigade/haml-lint) for HAML
   * [jshint](http://jshint.com) for JavaScript
   * [rubocop](https://github.com/bbatsov/rubocop) for Ruby
+  * [sass-lint](https://github.com/sasstools/sass-lint) for SASS
   * [scss-lint](https://github.com/brigade/scss-lint) for SCSS
   * [slim-lint](https://github.com/sds/slim-lint) for Slim
   * [stylelint](https://github.com/stylelint/stylelint) for SCSS/CSS
