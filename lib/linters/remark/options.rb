@@ -1,3 +1,4 @@
+require "linters/base/options"
 require "linters/remark/tokenizer"
 
 module Linters

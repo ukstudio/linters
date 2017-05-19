@@ -10,6 +10,7 @@ module Linters
     def execute
       output, status = Open3.capture2e(command, chdir: directory)
 
+      byebug
       if status.success?
         output
       else
